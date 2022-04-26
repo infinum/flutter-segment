@@ -185,18 +185,11 @@ static BOOL wasSetupFromFile = NO;
     NSString *userId = call.arguments[@"userId"];
     NSDictionary *traits = call.arguments[@"traits"];
     NSDictionary *options = call.arguments[@"options"];
-      
-      if ([userId isEqual:[NSNull null]]){
-          [[SEGAnalytics sharedAnalytics] identify: nil
-                            traits: traits
-                           options: options];
-      } else {
-          [[SEGAnalytics sharedAnalytics] identify: userId
-                            traits: traits
-                           options: options];
-      }
 
-
+    userId = [userId isEqual:[NSNull null]]? nil: userId;
+    [[SEGAnalytics sharedAnalytics] identify: userId
+                      traits: traits
+                     options: options];
 
     result([NSNumber numberWithBool:YES]);
   }
